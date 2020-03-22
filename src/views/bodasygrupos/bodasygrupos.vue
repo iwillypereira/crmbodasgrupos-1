@@ -124,7 +124,7 @@ export default {
     getProjectData() {
       this.loader = true;
       this.$http
-        .get("https://www.rutamayatravel.com/sur4/admin/bloqueos/grupoBodas")
+        .get("https://www.rutamayatravel.com/sur4/admin/apivue/grupoBodas")
         .then(
           function(response) {
             this.projectData = response.data;
