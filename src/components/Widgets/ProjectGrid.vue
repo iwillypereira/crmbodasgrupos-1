@@ -34,7 +34,7 @@
       <v-btn
         color="primary"
         medium
-        :to="`/${getCurrentAppLayoutHandler() + '/bodasygrupos/bloqueo/'+ managementData.id_bloqueo}`"
+        :to="`/${getCurrentAppLayoutHandler() + '/bloqueo/'+ managementData.id_bloqueo}`"
       >Ver más</v-btn>
     </div>
   </div>

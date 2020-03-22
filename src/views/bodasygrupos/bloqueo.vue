@@ -50,7 +50,7 @@ export default {
       this.loader = true;
       this.$http
         .get(
-          "https://www.rutamayatravel.com/sur4/admin/bloqueos/grupoBodas/" +
+          "https://www.rutamayatravel.com/sur4/admin/apivue/grupoBodas/" +
             this.id
         )
         .then(
