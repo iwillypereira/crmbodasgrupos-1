@@ -15,11 +15,7 @@
                     <v-text-field class="pt-0 pr-3" v-model="busqueda" label="Buscar Hotel/Agencia"></v-text-field>
                   </div>
                   <div>
-                    <v-select
-                      v-model="orderArray"
-                      :items="selectfecha"
-                      class="pt-0 pr-3"
-                    ></v-select>
+                    <v-select v-model="orderArray" :items="selectfecha" class="pt-0 pr-3"></v-select>
                   </div>
                 </div>
               </v-col>
@@ -45,41 +41,53 @@
           >list</v-icon>
         </div>
       </div>
-      <v-row>
-        <app-card
-          v-for="(data,index) in busquedaPaquetes"
-          :key="index"
-          :heading="data.idTarifa.precio"
-          colClasses="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12"
-          customClasses="mb-0"
-          :fullBlock="true"
-          :fullScreen="true"
-          :reloadable="true"
-          :closeable="true"
-          v-show="selectedView == 'grid'"
-        >
-          <!-- <h3>{{data.idTarifa.precio}}</h3> -->
-          <h5 class="app-card-content pb-0">{{'Hotel: '+data.idHotel.nombre_hotel}}</h5>
-          <h5
-            class="app-card-content pb-0"
-          >Del {{moment(data.fecha_inicio).format('LL')}} al {{moment(data.fecha_final).format('LL')}}</h5>
-          <h5 class="app-card-content pb-">Agencia: {{data.idAgencia.nombre_agencia}}</h5>
-          <ProjectGridView :managementData="data"></ProjectGridView>
-        </app-card>
-      </v-row>
-      <v-row v-show="selectedView == 'list'">
-        <app-card colClasses="col-xl-12 col-lg-12 col-md-12 col-12 col-12" customClasses="mb-0">
-          <!-- <ProjectListView :managementData="busqueda"></ProjectListView> -->
-          <v-data-table
-            :headers="headers"
-            :items="busquedaPaquetes"
-            item-key="name"
-            class="elevation-1"
-            :loading="loader"
-            loading-text="Cargando... Espere"
-          ></v-data-table>
-        </app-card>
-      </v-row>
+
+      <div class="text-center">
+        <v-progress-circular
+          :size="150"
+          :width="17"
+          color="purple"
+          indeterminate
+          v-if="loader == true"
+        ></v-progress-circular>
+      </div>
+      <div v-show="loader == false">
+        <v-row>
+          <app-card
+            v-for="(data,index) in busquedaPaquetes"
+            :key="index"
+            :heading="data.tarifa.precio"
+            colClasses="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12"
+            customClasses="mb-0"
+            :fullBlock="true"
+            :fullScreen="true"
+            :reloadable="true"
+            :closeable="true"
+            v-show="selectedView == 'grid'"
+          >
+            <!-- <h3>{{data.tarifa.precio}}</h3> -->
+            <h5 class="app-card-content pb-0">{{'Hotel: '+data.hotel.nombre_hotel}}</h5>
+            <h5
+              class="app-card-content pb-0"
+            >Del {{moment(data.fecha_inicio).format('LL')}} al {{moment(data.fecha_final).format('LL')}}</h5>
+            <h5 class="app-card-content pb-">Agencia: {{data.nombre_agencia}}</h5>
+            <ProjectGridView :managementData="data"></ProjectGridView>
+          </app-card>
+        </v-row>
+        <v-row v-show="selectedView == 'list'">
+          <app-card colClasses="col-xl-12 col-lg-12 col-md-12 col-12 col-12" customClasses="mb-0">
+            <!-- <ProjectListView :managementData="busqueda"></ProjectListView> -->
+            <v-data-table
+              :headers="headers"
+              :items="busquedaPaquetes"
+              item-key="name"
+              class="elevation-1"
+              :loading="loader"
+              loading-text="Cargando... Espere"
+            ></v-data-table>
+          </app-card>
+        </v-row>
+      </div>
     </v-container>
   </div>
 </template>
@@ -92,6 +100,7 @@ export default {
   },
   data() {
     return {
+      loader: true,
       projectData: [],
       headers: [
         {
@@ -100,9 +109,9 @@ export default {
           value: "id_bloqueo",
           sortable: true
         },
-        { text: "Tipo", value: "idTarifa.precio", sortable: true },
-        { text: "Hotel", value: "idHotel.nombre_hotel", sortable: true },
-        { text: "Agencia", value: "idAgencia.nombre_agencia", sortable: true },
+        { text: "Tipo", value: "tarifa.precio", sortable: true },
+        { text: "Hotel", value: "hotel.nombre_hotel", sortable: true },
+        { text: "Agencia", value: "agencia.nombre_agencia", sortable: true },
         { text: "Titulo", value: "titulo", sortable: true }
       ],
       viewType: "projectGrid",
@@ -110,11 +119,8 @@ export default {
       isActive: "grid",
       busqueda: "",
       titleMSJ: "Vista Cuadriculada",
-      orderArray: "Ascendiente",
-      selectfecha: [
-        'Ascendiente',
-        'Descendiente',
-      ]
+      orderArray: "Recientes",
+      selectfecha: ["Recientes", "Proxixmos"]
     };
   },
   mounted() {
@@ -129,6 +135,7 @@ export default {
           function(response) {
             this.projectData = response.data;
             console.log(this.projectData);
+
             this.loader = false;
           },
           function() {
@@ -152,28 +159,27 @@ export default {
   computed: {
     busquedaPaquetes: function() {
       var self = this;
-
-      if (this.orderArray == "Ascendiente" || this.orderArray == "") {
-        self.projectData.sort(function(a, b) {
+      var array_interno = this.projectData;
+      if (this.orderArray == "Recientes" || this.orderArray == "") {
+        array_interno.sort(function(a, b) {
           a = new Date(a.fecha_inicio);
           b = new Date(b.fecha_inicio);
           return a > b ? 1 : a < b ? -1 : 0;
         });
       } else {
-        self.projectData.sort(function(a, b) {
+        array_interno.sort(function(a, b) {
           a = new Date(a.fecha_inicio);
           b = new Date(b.fecha_inicio);
           return a > b ? -1 : a < b ? 1 : 0;
         });
       }
-      return this.projectData.filter(data => {
+      return array_interno.filter(data => {
         // if (data.novios != null) {
-
         return (
-          data.idHotel.nombre_hotel
+          data.nombre_hotel
             .toLowerCase()
             .includes(self.busqueda.toLowerCase()) ||
-          data.idAgencia.nombre_agencia
+          data.nombre_agencia
             .toLowerCase()
             .includes(self.busqueda.toLowerCase())
         );

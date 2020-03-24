@@ -1,8 +1,8 @@
 <template>
   <div class="app-card-content pt-0">
-    <div class="desc-wrap" v-if="managementData.idTarifa.precio =='BODA'">
+    <div class="desc-wrap" v-if="managementData.tarifa.precio =='BODA'">
       <h6>Novios :</h6>
-      <p>{{ managementData.novios }}</p>
+      <p>{{ managementData.bloqueo.novios }}</p>
     </div>
     <div class="desc-wrap">
       <h6>Habitaciones :</h6>
@@ -10,8 +10,15 @@
     </div>
     <div class="desc-wrap">
       <h6>Tipo de Habitación :</h6>
-      <p>{{managementData.idTipoHabitacion.tipo_habitacion}}</p>
+      <p>{{managementData.habitacion.tipo_habitacion}}</p>
     </div>
+    <!-- <div class="desc-wrap" v-if="managementData.tarifa.precio =='BODA' && managementData.pagos !='undefined'">
+      <div :key="index" v-for="(data,index) in  managementData.pagos">
+        <h2>{{data.importe}}</h2>
+        <h2>{{data.pagado}}</h2>
+      </div>
+    </div> -->
+
     <!-- <div class="mb-4 project-team">
          <h6>Team Members :</h6>
          <div>
@@ -25,16 +32,21 @@
          <p>{{ managementData.deadline }}</p>
     </div>-->
     <div class="progress-bar mb-5">
-      <h6 class="v-input__prepend-outer mb-5">Progress : {{ managementData.progressValue }} %</h6>
+      <h6 class="v-input__prepend-outer mb-5">Progress : {{ managementData.progreso_de_pago }} %</h6>
       <div class="d-flex justify-space-between text-center pa-0">
-        <v-progress-linear v-model="managementData.progressValue" color="primary" height="7"></v-progress-linear>
+        <v-progress-linear v-model="managementData.progreso_de_pago" color="black" height="7" v-if="managementData.progreso_de_pago == 0"></v-progress-linear>               
+        <v-progress-linear v-model="managementData.progreso_de_pago" color="red" height="7" v-else-if="managementData.progreso_de_pago <= 25"></v-progress-linear>    
+        <v-progress-linear v-model="managementData.progreso_de_pago" color="deep-orange" height="7" v-else-if="managementData.progreso_de_pago <= 50"></v-progress-linear>
+        <v-progress-linear v-model="managementData.progreso_de_pago" color="light-green" height="7" v-else-if="managementData.progreso_de_pago <= 75"></v-progress-linear>
+        <v-progress-linear v-model="managementData.progreso_de_pago" color="green" height="7" v-else-if="managementData.progreso_de_pago <= 100"></v-progress-linear>
+        
       </div>
     </div>
     <div class="button-wrap text-right">
       <v-btn
         color="primary"
         medium
-        :to="`/${getCurrentAppLayoutHandler() + '/bloqueo/'+ managementData.id_bloqueo}`"
+        :to="`/${getCurrentAppLayoutHandler() + '/bloqueo/'+ managementData.bloqueo.id_bloqueo}`"
       >Ver más</v-btn>
     </div>
   </div>

@@ -33,6 +33,8 @@ export function textTruncate(str, length, ending) {
 	}
 }
 
+
+
 /**
  * Function to convert hex to rgba
  */

@@ -1,6 +1,8 @@
+
 export default {
     data() {
         return {
+            loader: true,
             headers: [
                 {
                     text: "Dessert (100g serving)",
@@ -11,22 +13,38 @@ export default {
                 { text: "Calories", value: "calories" }
             ],
             array_agencias: [],
-            busqueda: ""
+            busqueda: "",
+            NUM_RESULTS: 9, // Numero de resultados por pÃ¡gina
+            pag: 1, // PÃ¡gina inicial
+            id: this.$route.params.id,
         };
     },
     mounted() {
         this.loadAgencias();
     },
     methods: {
+        formatPrice(value) {
+            var redondear = Math.ceil(value);
+            let val = (redondear / 1).toFixed(2).replace(',', '.')
+            return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        },
+        redondearArriba(value) {
+            var redondear = Math.ceil(value);
+            
+            return redondear;
+        },
         loadAgencias() {
             this.loader = true;
             this.$http
-                .get("https://www.rutamayatravel.com/sur4/admin/apivue/agencias")
+                .get("https://www.rutamayatravel.com/sur4/admin/apivue/agenciasPeti")
                 .then(
                     function (response) {
+                      
                         this.array_agencias = response.data;
-                        this.loader = false;
+                        
                         console.log(this.array_agencias);
+                      
+                        this.loader = false;
                     },
                     function () {
                         console.log("Error");

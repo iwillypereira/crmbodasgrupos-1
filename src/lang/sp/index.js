@@ -1,5 +1,15 @@
 //messages.js
 export default {
+  //MAIN MESSAGES 
+  notifications: 'Notificaciones',
+  logOut: 'Añadir',
+  inbox: 'Bandeja de entrada',
+  usersList: 'Lista de usuarios', 
+  userProfile: 'Perfil del usuario',
+  search: 'Buscar',
+  close: 'Cerca',
+  fullScreen: 'Pantalla completa', 
+  reload: 'Recargar', 
   //BODAS y GRUPOS
   gruposYbodas: "Grupos / Bodas",
   //PAGOS
