@@ -4,6 +4,7 @@ export default {
             array_agencia: [],
             loader: false,
             array_paquetes_agencia: [],
+            array_proximos_pagos: [],
             headers_paquetes: [
                 {
                     text: "Id",
@@ -45,13 +46,28 @@ export default {
                 .then(
                     function (response) {
                         this.array_agencia = response.data;
-                        this.loader = false;
                         this.loadPaquetesAgencia();
+                        this.loadProximosPagos();
+                        this.loader = false;
                     },
                     function () {
                         console.log("Error");
                     }
                 );
+        },
+        
+        loadProximosPagos(){
+            this.$http
+            .get("https://www.rutamayatravel.com/sur4/admin/apivue/ProximosPagos/" + this.id)
+            .then(
+                function (response) {
+                    this.array_proximos_pagos = response.data;
+                    console.log(this.array_proximos_pagos);
+                },
+                function () {
+                    console.log("Error");
+                }
+            );
         },
         loadPaquetesAgencia() {
             this.$http
@@ -59,7 +75,7 @@ export default {
                 .then(
                     function (response) {
                         this.array_paquetes_agencia = response.data;
-                        console.log(this.array_paquetes_agencia);
+                        // console.log(this.array_paquetes_agencia);
                     },
                     function () {
                         console.log("Error");

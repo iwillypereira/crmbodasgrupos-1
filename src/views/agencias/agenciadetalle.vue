@@ -41,7 +41,25 @@
         </app-card>
         <!--selectedProject -->
         <app-card colClasses="col-xl-4 col-lg-4 col-md-5 col-sm-12 col-12 ">
+          <div class="text-center">
           <h3>Proximos pagos</h3>
+          <br />
+            <v-progress-circular
+              :size="150"
+              :width="17"
+              color="purple"
+              indeterminate
+              v-if="loader == true"
+            ></v-progress-circular>
+          </div>
+          <div v-show="loader == false">
+            <div v-for="(pago,index) in array_proximos_pagos" :key="index">
+              <h6>
+                <b>{{pago.descripcion_pago}} - {{pago.id_politicas_pagos_desglose}}</b>
+              </h6>
+              <p>{{pago.fecha}} - {{pago.importe}}</p>
+            </div>
+          </div>
         </app-card>
       </v-row>
     </v-container>
