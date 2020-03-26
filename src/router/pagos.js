@@ -12,7 +12,7 @@ export default {
             component: proximospagos,
             path: '/pagos',
             meta: {
-                requiresAuth: true,
+                requiresAuth: false,
                 title: 'message.listaPagos',
                 breadcrumb: [
                     {

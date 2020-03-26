@@ -13,7 +13,7 @@ export default {
             component: listaAgencias,
             path: '/agencias',
             meta: {
-                requiresAuth: true,
+                requiresAuth: false,
                 title: 'message.listaAgencias',
                 breadcrumb: [
                     {

@@ -13,7 +13,7 @@ export default {
           path: '/bodasgrupos/',
           component: gruposybodas,
           meta: {
-             requiresAuth: true,
+             requiresAuth: false,
              title: 'message.gruposYbodas',
             breadcrumb: [
                {
@@ -29,7 +29,7 @@ export default {
           path: '/bodasgrupos/bloqueo/:id',
           component: detalleBodaGrupo,
           meta: {
-             requiresAuth: true,
+             requiresAuth: false,
              title: 'message.gruposYbodas',
             breadcrumb: [
                {

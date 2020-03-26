@@ -16,7 +16,7 @@ export default new Router({
 		// defaultRoutes,
 		bodasgrupos,
 		pagos,
-		agencias,
+		agencias
 		// {
 		// 	path: '/callback',
 		// 	component: Auth0CallBack

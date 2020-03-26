@@ -39,7 +39,6 @@ export default {
             return redondear;
         },
         loadAgencias() {
-            // alert("mounted");
             this.loader = true;
             this.$http
                 .get("https://www.rutamayatravel.com/sur4/admin/apivue/agencias/" + this.id)
