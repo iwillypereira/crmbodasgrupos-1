@@ -7,28 +7,28 @@ export const menus = {
 			items: null,
 			path: '/',
 			exact: true,
-			label:'New'
+			label:'Old'
 		},
 		{
-			action: 'zmdi-crop',
+			action: 'zmdi-card',
 			title: 'message.proximosPagos',
 			active: false,
 			items: null,
 			path: '/pagos/',
 			exact: true,			
-			label:'New'
+			label:'Old'
 		},	
 		{
-			action: 'zmdi-crop',
+			action: 'zmdi-card-travel',
 			title: 'message.agencias',
 			active: false,
 			items: null,
 			path: '/agencias/',
 			exact: true,
-			label:'New'
+			label:'Old'
 		},	
 		{
-			action: 'zmdi-crop',
+			action: 'zmdi-notifications-active',
 			title: 'message.notifications',
 			active: false,
 			items: null,
