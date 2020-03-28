@@ -2,8 +2,6 @@
   <div>
     <page-title-bar></page-title-bar>
     <v-container fluid>
-    
-    <v-text-field label="Another input" id="customJquery"></v-text-field>
       <div class="text-center">
         <v-progress-circular
           :size="150"

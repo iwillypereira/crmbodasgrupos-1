@@ -2,7 +2,7 @@
   <div>
     <page-title-bar></page-title-bar>
     <v-container>
-        <v-text-field
+      <v-text-field
         v-model="search"
         append-icon="mdi-magnify"
         label="Search"
@@ -27,7 +27,7 @@ export default {
     return {
       loader: true,
       array_proximos_pagos: [],
-      search: '',
+      search: "",
       headers: [
         {
           text: "Bloqueo",
@@ -35,12 +35,12 @@ export default {
           value: "id_bloqueo",
           sortable: true
         },
+        { text: "Importe", value: "importe", sortable: true },
         { text: "Hotel", value: "id_hotel", sortable: true },
-        { text: "observacion", value: "observacion", sortable: true },
+        { text: "Pago", value: "pago", sortable: true },
         { text: "Inico", value: "fecha_inicio", sortable: true },
         { text: "Final", value: "fecha_final", sortable: true },
-        { text: "Importe", value: "importe", sortable: true },
-        { text: "tipo", value: "tipo", sortable: true }
+        { text: "Titulo", value: "titulo", sortable: true }
       ]
     };
   },
@@ -48,11 +48,23 @@ export default {
     this.getProjectData();
   },
   methods: {
+    formatDate(date) {
+      if (!date) {
+        return null;
+      }
+      const [year, month, day] = date.split("-");
+      return `${day}/${month}/${year}`;
+    },
+    formatPrice(value) {
+      var redondear = Math.ceil(value);
+      let val = (redondear / 1).toFixed(2).replace(",", ".");
+      return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    },
     getProjectData() {
       this.loader = true;
       this.$http
         .get(
-          "https://www.rutamayatravel.com/sur4/admin/apivue/ListaProximosPagos"
+          "https://www.rutamayatravel.com/sur4/admin/apivue/listaProximosPagosAllBloqueos"
         )
         .then(
           function(response) {
