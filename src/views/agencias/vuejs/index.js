@@ -1,4 +1,4 @@
-import JQ from 'jquery';
+// import $ from 'jquery';
 export default {
     data() {
         return {
@@ -42,10 +42,14 @@ export default {
 
                         this.array_agencias = response.data;
                         this.array_agencias = response.data;
-                        console.log(this.array_agencias);
+                        // console.log(this.array_agencias);
 
-                        // var variable = JQ.$("#customJquery").val();
-                        // alert(variable);
+
+                        // $("#customJquery").keyup(function (e) {
+                        //     e.preventDefault();
+                        //     var variable = $("#customJquery").val();
+                        //     console.log(variable);
+                        // });
 
 
                         this.loader = false;
