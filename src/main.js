@@ -20,6 +20,7 @@ import InstantSearch from 'vue-instantsearch'
 import VueVideoPlayer from 'vue-video-player';
 import Croppa from 'vue-croppa';
 
+// import JQ from 'jquery';
 import moment from 'moment';
 
 
@@ -95,6 +96,7 @@ Vue.use(GlobalComponents);
 Vue.use(VueVideoPlayer);
 Vue.use(Croppa);
 Vue.use(moment);
+Vue.use(JQ);
 Vue.prototype.moment = moment;
 require('moment/locale/es')
  

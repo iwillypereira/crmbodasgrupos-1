@@ -53,7 +53,7 @@
             ></v-progress-circular>
           </div>
           <div v-show="loader == false">
-            <div v-for="(pago,index) in array_proximos_pagos" :key="index">
+            <div v-for="(pago,index) in array_pagos" :key="index">
               <h6>
                 <b>{{pago.descripcion_pago}} - {{pago.id_politicas_pagos_desglose}}</b>
               </h6>

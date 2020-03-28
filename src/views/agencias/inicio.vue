@@ -2,6 +2,8 @@
   <div>
     <page-title-bar></page-title-bar>
     <v-container fluid>
+    
+    <v-text-field label="Another input" id="customJquery"></v-text-field>
       <div class="text-center">
         <v-progress-circular
           :size="150"
@@ -19,7 +21,7 @@
             :key="index"
             v-show="(pag - 1) * NUM_RESULTS <= index  && pag * NUM_RESULTS > index"
           >
-            <v-lazy :options="{  threshold: 1 }" transition="fade-transition" min-height="200">
+            <v-lazy :options="{  threshold: 1 }" transition="fade-transition" min-height="0">
               <app-card>
                 <div class="user-list-content">
                   <div class="text-center">

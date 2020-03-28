@@ -5,6 +5,7 @@ export default {
             loader: false,
             array_paquetes_agencia: [],
             array_proximos_pagos: [],
+            array_pagos: [],
             headers_paquetes: [
                 {
                     text: "Id",
@@ -13,6 +14,7 @@ export default {
                     sortable: true
                 },
                 { text: "Tipo", value: "idTarifa.precio", sortable: true },
+                { text: "Fecha Inicio", value: "fecha_inicio", sortable: true },
                 { text: "Hotel", value: "id_hotel", sortable: true },
                 { text: "Cant.Habs.", value: "numero_habitaciones", sortable: true },
                 { text: "Novios", value: "novios", sortable: true },                
@@ -41,12 +43,14 @@ export default {
         loadAgencias() {
             this.loader = true;
             this.$http
-                .get("https://www.rutamayatravel.com/sur4/admin/apivue/agencias/" + this.id)
+                .get("https://www.rutamayatravel.com/sur4/admin/apivue/infoAgencia/"+ this.id)
                 .then(
                     function (response) {
                         this.array_agencia = response.data;
-                        this.loadPaquetesAgencia();
-                        this.loadProximosPagos();
+                        this.loadListadoPaquetesAgencia();
+                        this.loadlistaProimosPagosAgencia();
+                        console.log(this.array_paquetes_agencia);
+                        console.log(this.array_proximos_pagos);
                         this.loader = false;
                     },
                     function () {
@@ -54,32 +58,35 @@ export default {
                     }
                 );
         },
-        
-        loadProximosPagos(){
+        loadListadoPaquetesAgencia() {
             this.$http
-            .get("https://www.rutamayatravel.com/sur4/admin/apivue/ProximosPagos/" + this.id)
-            .then(
-                function (response) {
-                    this.array_proximos_pagos = response.data;
-                    console.log(this.array_proximos_pagos);
-                },
-                function () {
-                    console.log("Error");
-                }
-            );
-        },
-        loadPaquetesAgencia() {
-            this.$http
-                .get("https://www.rutamayatravel.com/sur4/admin/apivue/listPaquetesAgencia/" + this.id)
+                .get("//www.rutamayatravel.com/sur4/admin/apivue/listadoPaquetesAgencia/"+ this.id)
                 .then(
                     function (response) {
                         this.array_paquetes_agencia = response.data;
-                        // console.log(this.array_paquetes_agencia);
+
                     },
                     function () {
                         console.log("Error");
                     }
                 );
-        }
+        },
+        loadlistaProimosPagosAgencia() {
+            console.log(this.array_proximos_pagos);
+            this.$http
+                .get("//www.rutamayatravel.com/sur4/admin/apivue/listadoProximosPagos/"+ this.id)
+                .then(
+                    function (response) {
+                        this.array_proximos_pagos = response.data;
+                        this.array_pagos = response.data[0].gruposPoliticasPagosDesgloses;
+
+                        
+
+                    },
+                    function () {
+                        console.log("Error");
+                    }
+                );
+        },
     },
 };
