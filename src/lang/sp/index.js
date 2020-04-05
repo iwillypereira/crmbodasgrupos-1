@@ -20,6 +20,11 @@ export default {
 
 
 
+  //modulo pagos
+  modulo_pagos: "Finanzas",
+  mod_pago: "Cobro",
+
+
   agencias: "Agencias",
   llamadas: "Registro de llámadas",
   resumen: "Resumen",

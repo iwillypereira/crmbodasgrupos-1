@@ -5,40 +5,12 @@
       <v-card class="pa-5">
         <v-row>
           <v-col cols="12">
-            <v-select v-model="selectedFruits" :items="fruits" label="Favorite Fruits" multiple>
 
-
-
-              <template v-slot:prepend-item>
-                <v-text-field label="Buscar"></v-text-field>
-              </template>
-             
-              <template v-slot:append-item>
-             
-                <v-list-item disabled>
-                  <v-list-item-avatar color="grey lighten-3">
-                    <v-icon>mdi-food-apple</v-icon>
-                  </v-list-item-avatar>
-
-                  <v-list-item-content v-if="likesAllFruit">
-                    <v-list-item-title>Holy smokes, someone call the fruit police!</v-list-item-title>
-                  </v-list-item-content>
-
-                  <v-list-item-content v-else-if="likesSomeFruit">
-                    <v-list-item-title>Fruit Count</v-list-item-title>
-                    <v-list-item-subtitle>{{ selectedFruits.length }}</v-list-item-subtitle>
-                  </v-list-item-content>
-
-                  <v-list-item-content v-else>
-                    <v-list-item-title>How could you not like fruit?</v-list-item-title>
-                    <v-list-item-subtitle>Go ahead, make a selection above!</v-list-item-subtitle>
-                  </v-list-item-content>
-                </v-list-item>
-              </template>
-
-
-
-            </v-select>
+            <input type="text" name="city" list="cityname" v-model="busqueda">
+            {{busqueda}}
+            <datalist id="cityname">
+              <option :value="data" v-for="(data,index) in fruits" :key="index"></option>
+            </datalist>
           </v-col>
           <v-col cols="6">
             <h3>Filtros</h3>
@@ -71,6 +43,7 @@
 export default {
   data() {
     return {
+      busqueda: "",
       fruits: [
         "Apples",
         "Apricots",
@@ -172,6 +145,6 @@ export default {
           }
         );
     }
-  }
+  },
 };
 </script>

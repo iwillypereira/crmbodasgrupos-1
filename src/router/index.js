@@ -2,21 +2,24 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 //routes
-import bodasgrupos from './bodasgrupos';
-import pagos from './pagos';
-import agencias from './agencias';
-
-
+import bodasgrupos from './imports/bodasgrupos';
+import pagos from './imports/pagos';
+import agencias from './imports/agencias';
+import notificaciones from './imports/notificaciones';
+import cobros from './imports/cobro';
 
 Vue.use(Router)
 
 export default new Router({
 	mode: 'history',
+	// base: '/vuely', // add here your sub-directory name
 	routes: [
 		// defaultRoutes,
 		bodasgrupos,
 		pagos,
-		agencias
+		agencias,
+		notificaciones,
+		cobros
 		// {
 		// 	path: '/callback',
 		// 	component: Auth0CallBack

@@ -24,6 +24,8 @@ import StatsCardV2 from 'Components/StatsCardV2/StatsCardV2';
 // section tooltip
 import SectionTooltip from "Components/SectionTooltip/SectionTooltip"
 
+
+
 const GlobalComponents = {
    install(Vue) {
       Vue.component('appCard', AppCard);

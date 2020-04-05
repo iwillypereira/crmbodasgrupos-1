@@ -20,9 +20,14 @@ import InstantSearch from 'vue-instantsearch'
 import VueVideoPlayer from 'vue-video-player';
 import Croppa from 'vue-croppa';
 
-import $ from 'jquery'
+//jquery
+import $ from 'jquery';
+//moment JS
 import moment from 'moment';
 
+//Vue Mask
+import VueTheMask from 'vue-the-mask';
+import money from 'v-money'
 
 // global components
 import GlobalComponents from './globalComponents'
@@ -83,6 +88,7 @@ router.afterEach(() => {
 })
 
 Vue.use(InstantSearch);
+
 Vue.use(VueI18n)
 Vue.use(VueTour)
 Vue.use(Vue2Dragula)
@@ -99,6 +105,8 @@ Vue.use(moment);
 Vue.use($);
 Vue.prototype.moment = moment;
 require('moment/locale/es')
+Vue.use(VueTheMask);
+Vue.use(money, {precision: 2})
  
 
  

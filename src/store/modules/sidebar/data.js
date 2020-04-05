@@ -32,9 +32,21 @@ export const menus = {
 			title: 'message.notifications',
 			active: false,
 			items: null,
-			path: '/image-cropper',
+			path: '/notificaciones/',
 			exact: true,
 			label:'Old'
 		}			
+	],
+	'message.modulo_pagos':[
+		{
+			action: 'zmdi-crop',
+			title: 'message.mod_pago',
+			active: false,
+			items: null,
+			path: '/cobro',
+			exact: true,
+			label:'Old'
+		},
 	]
+
 }
