@@ -25,6 +25,8 @@ import $ from 'jquery';
 //moment JS
 import moment from 'moment';
 
+import Multiselect from "vue-multiselect";
+
 //Vue Mask
 import VueTheMask from 'vue-the-mask';
 import money from 'v-money'
@@ -102,6 +104,7 @@ Vue.use(GlobalComponents);
 Vue.use(VueVideoPlayer);
 Vue.use(Croppa);
 Vue.use(moment);
+Vue.component("multiselect", Multiselect);
 Vue.use($);
 Vue.prototype.moment = moment;
 require('moment/locale/es')

@@ -12,7 +12,7 @@ Vue.use(Router)
 
 export default new Router({
 	mode: 'history',
-	// base: '/vuely', // add here your sub-directory name
+	base: '/vuely', // add here your sub-directory name
 	routes: [
 		// defaultRoutes,
 		bodasgrupos,
