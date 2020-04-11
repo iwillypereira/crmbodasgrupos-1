@@ -25,7 +25,9 @@ import $ from 'jquery';
 //moment JS
 import moment from 'moment';
 
-import Multiselect from "vue-multiselect";
+//RMT FUNCIONES
+import {RMT} from './plugins/rmt';
+
 
 //Vue Mask
 import VueTheMask from 'vue-the-mask';
@@ -104,7 +106,8 @@ Vue.use(GlobalComponents);
 Vue.use(VueVideoPlayer);
 Vue.use(Croppa);
 Vue.use(moment);
-Vue.component("multiselect", Multiselect);
+Vue.prototype.$RMT = RMT;
+
 Vue.use($);
 Vue.prototype.moment = moment;
 require('moment/locale/es')

@@ -23,12 +23,14 @@ import StatsCardV2 from 'Components/StatsCardV2/StatsCardV2';
 
 // section tooltip
 import SectionTooltip from "Components/SectionTooltip/SectionTooltip"
+import ComponentPrueba from "Components/RMT/componenteprueba"
 
 
 
 const GlobalComponents = {
    install(Vue) {
       Vue.component('appCard', AppCard);
+      Vue.component('componentPrueba', ComponentPrueba);      
       Vue.component('sectionTooltip', SectionTooltip);
       Vue.component('statsCard', StatsCard);
       Vue.component('statsCardV2', StatsCardV2);
