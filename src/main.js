@@ -112,7 +112,7 @@ Vue.use($);
 Vue.prototype.moment = moment;
 require('moment/locale/es')
 Vue.use(VueTheMask);
-Vue.use(money, {precision: 2})
+Vue.use(money,{ decimal: '.', thousands: ',', prefix: '$ ', precision: 2 })
  
 
  

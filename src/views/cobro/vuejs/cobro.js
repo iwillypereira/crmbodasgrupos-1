@@ -14,6 +14,7 @@ export default {
             dialog: false,
             dialog_habitaciones: false,
             dialog_guardar_pagar: false,
+            dialog_confirmar_guardar: false,
             modelo_habitaciones: [],
 
             selected_agencia: "",
@@ -39,18 +40,27 @@ export default {
             timeout: 6000,
             x: null,
             y: 'top',
-            mostrarBotonBusqueda: false,
+            mostrarBotonBusqueda: true,
 
             loaderHabitaciones: true,
 
             settings: [],
             msjError: '',
             array_test: {},
+            switchInput: false,
 
             array_cuartos_busqueda: [],
 
             model_agencia_selected: null,
             search: null,
+            money: {
+                decimal: '.',
+                thousands: ',',
+                prefix: '',
+                suffix: '',
+                precision: 2,
+                masked: false
+            }
         }
     },
     created() {
@@ -59,15 +69,35 @@ export default {
     mounted() {
     },
     methods: {
+        isNumber: function (evt) {
+            evt = (evt) ? evt : window.event;
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
+            if ((charCode > 31 && (charCode < 48 || charCode > 57)) && charCode !== 46) {
+                evt.preventDefault();
+            } else {
+                return true;
+            }
+        },
+        switchInputEvent() {
+            this.switchInput = true;
+            this.calcularTotalSaldo();
+        },
+        pruebaGetInfoInputMain(index) {
+            // var prueba1 = this.json_busqueda_prueba[index].saldo.replace(/[^a-z0-9\s]/gi, '');
+            // this.json_busqueda_prueba[index].saldo = prueba1;
+            this.switchInput = false;
+            this.calcularTotalSaldo();
+            console.log(index);
+        },
         agregarHabAOrden(modelo) {
             this.id_producto = modelo.identificador;
             this.peticionTest();
-            this.dialog_habitaciones = false;
-            this.dialog = false;
-            this.array_busqueda_agencia = [];
-            this.modelo_habitaciones = [];
-            this.snackbar = false;
-           
+            // this.dialog_habitaciones = false;
+            // this.dialog = false;
+            // this.array_busqueda_agencia = [];
+            // this.modelo_habitaciones = [];
+            // this.snackbar = false;
+
         },
         agregarReserva() {
 
@@ -172,7 +202,7 @@ export default {
             this.calcularTotalSaldo();
         },
         abrirModal() {
-    
+
             this.nombre_agencia = this.model_agencia_selected.nombre_agencia;
             this.id_agencia = this.model_agencia_selected.id_agencia;
             this.buscarAgenciaPagos();
@@ -192,12 +222,12 @@ export default {
 
                     if (this.array_temp_producto.empty == "No ingreso algun código de busqueda") {
                         this.msjError = "<p>" + this.array_temp_producto.empty + "</p>";
-                    }else if(this.array_temp_producto.empty == "Ocurrió un error al momento de la busqueda. Consulte a Soporte."){
-                        this.mensaje(this.array_temp_producto.empty ,"red");
+                    } else if (this.array_temp_producto.empty == "Ocurrió un error al momento de la busqueda. Consulte a Soporte.") {
+                        this.mensaje(this.array_temp_producto.empty, "red");
                     } else if (this.array_temp_producto.empty == '') {
                         if (this.array_temp_producto.search.error != '') {
                             this.msjError = "<p>" + this.array_temp_producto.search.error + "</p>";
-                            this.mensaje(this.array_temp_producto.search.error,"red");
+                            this.mensaje(this.array_temp_producto.search.error, "red");
 
                         } else {
                             this.agregarReserva();
@@ -205,8 +235,8 @@ export default {
                             this.mensaje("Se ha agregado el producto" + this.id_producto, 'green');
                         }
 
-                    }else{
-                        this.mensaje(this.array_temp_producto.search.error,"red");
+                    } else {
+                        this.mensaje(this.array_temp_producto.search.error, "red");
 
                     }
                     // this.agregarReserva();
@@ -222,9 +252,10 @@ export default {
         },
 
         crearOrdenPago() {
-            this.id_agencia = this.model_agencia_selected.id_agencia;
+            console.log(this.model_agencia_selected);
             this.calcularTotalSaldo();
-            if (this.json_busqueda_prueba.length > 0 && this.model_agencia_selected.id_agencia != null) {
+            if (this.json_busqueda_prueba.length > 0 && this.model_agencia_selected != null) {
+                this.id_agencia = this.model_agencia_selected.id_agencia;
                 this.array_test = {
                     'OrdenPago': {
                         "id_usuario": 456,
@@ -241,7 +272,8 @@ export default {
                     if (response.data.error == false) {
 
                         this.nuevaOrden();
-                        this.mensaje("Se ha guardado con exito!", "green");
+                        this.dialog_confirmar_guardar = false;
+                        this.mensaje("Se ha guardado el pago", "green");
                     } else {
                         this.mensaje("Error al momento de guardar el pago", "red");
                     }

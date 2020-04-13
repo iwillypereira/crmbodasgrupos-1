@@ -36,7 +36,13 @@
               </v-autocomplete>
             </v-col>
             <v-col cols="2" md="1">
-              <v-btn color="primary" dark class="mt-4" v-if="mostrarBotonBusqueda" @click="abrirModal(); nombre_agencia = ''; precios = []; array_busqueda_agencia = []" >
+              <v-btn
+                color="primary"
+                dark
+                class="mt-4"
+                v-if="mostrarBotonBusqueda"
+                @click="abrirModal();  precios = []; array_busqueda_agencia = []"
+              >
                 <v-icon>mdi-magnify</v-icon>
               </v-btn>
             </v-col>
@@ -225,7 +231,6 @@
             </v-col>
           </v-row>
         </v-container>
-
         <v-simple-table class="py-0" :fixed-header="true" height="450">
           <template v-slot:default>
             <thead>
@@ -250,7 +255,22 @@
                 >$ {{ $RMT.formatoPrecio(data.importe) }}</td>
                 <td
                   style="width: 200px !important; text-align:right !important"
-                >$ {{ $RMT.formatoPrecio(data.saldo) }}</td>
+                  v-show="!switchInput"
+                  @click="switchInputEvent();"
+                >$ {{$RMT.formatoPrecio(data.saldo)}}</td>
+
+                <td
+                  style="width: 200px !important; text-align:right !important"
+                  v-show="switchInput"
+                >
+                  <v-text-field
+                    prefix="$"
+                    v-model.lazy="data.saldo"
+                    @keypress="isNumber($event);"
+                    @change="pruebaGetInfoInputMain(index);"
+                    suffix="MX"
+                  />
+                </td>
 
                 <td>
                   <v-btn icon light class="mt-0" @click="eliminarReserva(index)">
@@ -288,7 +308,7 @@
           </v-col>
           <v-col cols="6" md="6"></v-col>
           <v-col cols="2" md="2" class="text-center">
-            <v-btn color="green" block dark @click="crearOrdenPago()">Guardar</v-btn>
+            <v-btn color="green" block dark @click="dialog_confirmar_guardar= true; ">Guardar</v-btn>
           </v-col>
           <v-col cols="2" md="2" class="text-center">
             <v-btn color="green" block dark @click="dialog_guardar_pagar = true;">Guardar y Pagar</v-btn>
@@ -318,7 +338,6 @@
       <v-card>
         <v-card-title>Lista de Cuartos</v-card-title>
         <p class="pl-6">Has seleccionado: {{modelo_habitaciones.length}}</p>
-
         {{modelo_habitaciones.identificador}}
         <div v-for="(data,i) in 5" :key="i" v-show="loaderHabitaciones == true">
           <v-skeleton-loader ref="skeleton" :type="'list-item-avatar-three-line'" class="mx-auto"></v-skeleton-loader>
@@ -352,7 +371,13 @@
       </v-card>
     </v-dialog>
 
-    <v-dialog v-model="dialog_guardar_pagar" fullscreen hide-overlay transition="dialog-bottom-transition">
+    <!-- dialogo guardar y pagar -->
+    <v-dialog
+      v-model="dialog_guardar_pagar"
+      fullscreen
+      hide-overlay
+      transition="dialog-bottom-transition"
+    >
       <v-card>
         <v-toolbar dark color="pink">
           <v-toolbar-title>GUARDAR Y PAGAR</v-toolbar-title>
@@ -361,15 +386,31 @@
             <v-btn icon dark @click="dialog_guardar_pagar = false;" class="pt-0">
               <v-icon>mdi-close</v-icon>
             </v-btn>
+            <v-btn icon dark @click="dialog_guardar_pagar = false;" class="pt-0">
+              <v-icon>mdi-close</v-icon>
+            </v-btn>cart-arrow-down
           </v-toolbar-items>
         </v-toolbar>
 
         <v-container>
           <h2>Metodo de pagos</h2>
-         
-
         </v-container>
-    
+      </v-card>
+    </v-dialog>
+    <!-- Dialogo guardar confirmar -->
+    <v-dialog v-model="dialog_confirmar_guardar" max-width="290">
+      <v-card>
+        <v-card-title class="headline">¿Estas seguro de guardar el pago?</v-card-title>
+
+        <v-card-text>Esta a punto de guardar el pago.</v-card-text>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+
+          <v-btn color="red darken-1" text @click="dialog_confirmar_guardar = false">CANCELAR</v-btn>
+
+          <v-btn color="green darken-1" dark @click="crearOrdenPago();">GUARDAR</v-btn>
+        </v-card-actions>
       </v-card>
     </v-dialog>
   </div>
